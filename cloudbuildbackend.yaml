@@ -1,0 +1,31 @@
+steps:
+  # Step 1: Build Docker image
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["build", "-t", "gcr.io/$PROJECT_ID/tu6-be60", "."]
+
+  # Step 2: Push image ke Container Registry
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["push", "gcr.io/$PROJECT_ID/tu6-be60"]
+
+  # Step 3: Deploy ke Cloud Run (pakai port 8080 default)
+  - name: "gcr.io/cloud-builders/gcloud"
+    entrypoint: gcloud
+    args:
+      [
+        "run",
+        "deploy",
+        "tu6-be60",
+        "--image",
+        "gcr.io/$PROJECT_ID/tu6-be60",
+        "--timeout",
+        "1000s",
+        "--region",
+        "us-central1",
+        "--allow-unauthenticated",
+        "--platform",
+        "managed"
+      ]
+
+# Log ke Cloud Logging
+options:
+  logging: CLOUD_LOGGING_ONLY
