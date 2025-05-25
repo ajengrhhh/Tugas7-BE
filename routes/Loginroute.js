@@ -7,7 +7,7 @@ import {
   getUserById,
   loginHandler,
   logout,
-} from "../controllers/logincontroller.js";
+} from "../controllers/Logincontroller.js";
 import { refreshToken } from "../controllers/Refreshtoken.js";
 import { verifyToken } from "../middleware/Verifytoken.js";
 
