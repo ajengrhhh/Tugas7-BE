@@ -1,11 +1,16 @@
+substitutions:
+  _ENV: gs://tu7-060/.env
 steps:
+  - name: "gcr.io/cloud-builders/gsutil"
+    args: ["cp", "${_ENV}", ".env"]
+
   # Step 1: Build Docker image
   - name: "gcr.io/cloud-builders/docker"
-    args: ["build", "-t", "gcr.io/$PROJECT_ID/tu6-be60", "."]
+    args: ["build", "-t", "gcr.io/$PROJECT_ID/tu7-be60", "."]
 
   # Step 2: Push image ke Container Registry
   - name: "gcr.io/cloud-builders/docker"
-    args: ["push", "gcr.io/$PROJECT_ID/tu6-be60"]
+    args: ["push", "gcr.io/$PROJECT_ID/tu7-be60"]
 
   # Step 3: Deploy ke Cloud Run (pakai port 8080 default)
   - name: "gcr.io/cloud-builders/gcloud"
@@ -14,9 +19,9 @@ steps:
       [
         "run",
         "deploy",
-        "tu6-be60",
+        "tu7-be60",
         "--image",
-        "gcr.io/$PROJECT_ID/tu6-be60",
+        "gcr.io/$PROJECT_ID/tu7-be60",
         "--timeout",
         "1000s",
         "--region",
