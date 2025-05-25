@@ -18,4 +18,5 @@ app.get("/", (req, res) => res.render("index"));
 app.use(Loginroute); // <- ini penting
 app.use("/notes", NoteRoute);  // <- pastikan huruf kecil sesuai import
 
-app.listen(5001, () => console.log("Server connected"));
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => console.log(`Server connected on port ${PORT}`));
